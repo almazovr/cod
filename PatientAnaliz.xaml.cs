@@ -19,11 +19,7 @@ using yes.YchebkaDataSetTableAdapters;
 
 namespace yes
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class PatientAnaliz
-        : Window
+    public partial class PatientAnaliz : Window
     {
         AnalysisTableAdapter Analysis = new AnalysisTableAdapter();
 
@@ -31,7 +27,6 @@ namespace yes
         {
             InitializeComponent();
             spisok.ItemsSource = Analysis.GetData();
-
         }
 
         private void Voiti_Click(object sender, RoutedEventArgs e)
@@ -43,27 +38,69 @@ namespace yes
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            Analysis.InsertQuery(Convert.ToString(data.Text), Convert.ToInt32(Phsampone.Text), Convert.ToInt32(types.Text));
-            spisok.ItemsSource = Analysis.GetData();
+            if (string.IsNullOrWhiteSpace(data.Text) ||
+                string.IsNullOrWhiteSpace(Phsampone.Text) ||
+                string.IsNullOrWhiteSpace(types.Text))
+            {
+                MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
+            try
+            {
+                Analysis.InsertQuery(Convert.ToString(data.Text), Convert.ToInt32(Phsampone.Text), Convert.ToInt32(types.Text));
+                spisok.ItemsSource = Analysis.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при добавлении анализа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            object ID_Analyses = (spisok.SelectedItem as DataRowView).Row[0];
-            Analysis.DeleteQuery(Convert.ToInt32(ID_Analyses));
-            spisok.ItemsSource = Analysis.GetData();
+            if (spisok.SelectedItem == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите анализ для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
+            try
+            {
+                object ID_Analyses = (spisok.SelectedItem as DataRowView).Row[0];
+                Analysis.DeleteQuery(Convert.ToInt32(ID_Analyses));
+                spisok.ItemsSource = Analysis.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при удалении анализа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            object ID_Analyses = (spisok.SelectedItem as DataRowView).Row[0];
-            Analysis.UpdateQuery(Convert.ToString(data.Text), Convert.ToInt32(Phsampone.Text), Convert.ToInt32(types.Text), Convert.ToInt32(ID_Analyses));
-            spisok.ItemsSource = Analysis.GetData();
+            
+            if (spisok.SelectedItem == null ||
+                string.IsNullOrWhiteSpace(data.Text) ||
+                string.IsNullOrWhiteSpace(Phsampone.Text) ||
+                string.IsNullOrWhiteSpace(types.Text))
+            {
+                MessageBox.Show("Пожалуйста, выберите анализ и заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
+            try
+            {
+                object ID_Analyses = (spisok.SelectedItem as DataRowView).Row[0];
+                Analysis.UpdateQuery(Convert.ToString(data.Text), Convert.ToInt32(Phsampone.Text), Convert.ToInt32(types.Text), Convert.ToInt32(ID_Analyses));
+                spisok.ItemsSource = Analysis.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при изменении анализа: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        private void spisok_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
     }
 }
