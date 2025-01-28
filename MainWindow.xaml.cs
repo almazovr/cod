@@ -16,9 +16,6 @@ using yes.YchebkaDataSetTableAdapters;
 
 namespace yes
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         EmployeesTableAdapter adapter = new EmployeesTableAdapter();
@@ -27,15 +24,19 @@ namespace yes
             InitializeComponent();
         }
 
-        
+
         private void Voiti_Click(object sender, RoutedEventArgs e)
         {
+            bool loginSuccessful = false;
             var allLogins = adapter.GetData().Rows;
             for (int i = 0; i < allLogins.Count; i++)
             {
-                if (allLogins[i][1].ToString()== Login.Text &&
-                    allLogins[i][2].ToString()== Password.Password)
+
+                if (allLogins[i][1] != null && allLogins[i][2] != null &&
+                     allLogins[i][1].ToString() == Login.Text &&
+                    allLogins[i][2].ToString() == Password.Password)
                 {
+                    loginSuccessful = true;
                     int ID_Positions = (int)allLogins[i][5];
                     switch (ID_Positions)
                     {
@@ -56,11 +57,20 @@ namespace yes
                             tree.Show();
                             this.Close();
                             break;
-
                     }
+                    break;
+
                 }
 
+            }
+
+            if (!loginSuccessful)
+            {
+                MessageBox.Show("Неверный логин или пароль", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                Login.Text = "";
+                Password.Password = "";
             }
         }
     }
 }
+
