@@ -1,0 +1,21 @@
+﻿<Window x:Class="yes.PatientAnaliz"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:yes"
+        mc:Ignorable="d"
+        Title="PatientAnaliz" Height="460" Width="831">
+    <Grid HorizontalAlignment="Center" Width="831" Height="444" VerticalAlignment="Top">
+        <TextBlock Text="Редактировать анализы пациента" FontSize="20" FontWeight="Bold" Margin="10,10,10,372" TextAlignment="Center" RenderTransformOrigin="0.506,1.366"/>
+
+        <Button x:Name="Voiti" Content="Назад" Grid.Row="0" Margin="0,382,0,0" RenderTransformOrigin="0.508,1.154" Height="45" VerticalAlignment="Top" HorizontalAlignment="Center" Width="261" Click="Voiti_Click"/>
+        <Button x:Name="Delete" Content="Удалить" Grid.Row="0" Margin="0,310,0,0" RenderTransformOrigin="0.508,1.154" Height="34" VerticalAlignment="Top" HorizontalAlignment="Center" Width="157" Click="Delete_Click"/>
+        <Button x:Name="Add" Content="Добавить" Grid.Row="0" Margin="156,310,0,0" RenderTransformOrigin="0.508,1.154" Height="34" VerticalAlignment="Top" HorizontalAlignment="Left" Width="157" Click="Add_Click"/>
+        <Button x:Name="Edit" Content="Редактировать" Grid.Row="0" Margin="508,310,0,0" RenderTransformOrigin="0.508,1.154" Height="34" VerticalAlignment="Top" HorizontalAlignment="Left" Width="157" Click="Edit_Click"/>
+        <DataGrid x:Name="spisok" Margin="0,72,435,0" Height="224" VerticalAlignment="Top" HorizontalAlignment="Right" Width="353"/>
+        <TextBox x:Name="data" Margin="500,90,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="261"/>
+        <TextBox x:Name="Phsampone" Margin="500,137,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="261"/>
+        <TextBox x:Name="types" Margin="500,184,0,0" Height="32" VerticalAlignment="Top" HorizontalAlignment="Left" Width="261" />
+    </Grid>
+</Window>

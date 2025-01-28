@@ -1,0 +1,16 @@
+﻿<Window x:Class="yes.MainSupervisor"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:yes"
+        mc:Ignorable="d"
+        Title="MainSupervisor" Height="450" Width="800">
+    <Grid>
+        <TextBlock Text="Руководитель" FontSize="20" FontWeight="Bold" Margin="10,10,10,372" TextAlignment="Center" RenderTransformOrigin="0.506,1.366"/>
+        <Button x:Name="Login" Content="Отчёты"   Margin="280,110,0,0" RenderTransformOrigin="0.511,1.526" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240" Click="Login_Click"></Button>
+        <Button x:Name="Parol" Content="Должности" Grid.Row="0" Grid.Column="0" Margin="280,67,0,0" Height="28" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240" Click="Parol_Click"/>
+        <Button x:Name="Login_Копировать" Content="Сотрудники"   Margin="280,159,0,0" RenderTransformOrigin="0.511,1.526" Height="35" VerticalAlignment="Top" HorizontalAlignment="Left" Width="240" Click="Login_Копировать_Click"/>
+        <Button x:Name="Voiti" Content="Выйти из аккаунта"  Background="#FFFB4646" Margin="0,355,0,0" HorizontalAlignment="Center" Width="240" Height="35" VerticalAlignment="Top" Click="Voiti_Click"/>
+    </Grid>
+</Window>
