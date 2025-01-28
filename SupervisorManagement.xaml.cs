@@ -19,11 +19,7 @@ using yes.YchebkaDataSetTableAdapters;
 
 namespace yes
 {
-    /// <summary>
-    /// Логика взаимодействия для MainWindow.xaml
-    /// </summary>
-    public partial class SupervisorManagement
-        : Window
+    public partial class SupervisorManagement : Window
     {
         PositionsTableAdapter Positions = new PositionsTableAdapter();
 
@@ -31,7 +27,6 @@ namespace yes
         {
             InitializeComponent();
             spisok.ItemsSource = Positions.GetData();
-
         }
 
         private void Voiti_Click(object sender, RoutedEventArgs e)
@@ -43,22 +38,59 @@ namespace yes
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            Positions.InsertQuery(Convert.ToString(Name.Text));
-            spisok.ItemsSource = Positions.GetData();
+            if (string.IsNullOrWhiteSpace(Name.Text))
+            {
+                MessageBox.Show("Пожалуйста, введите название должности.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+            try
+            {
+                Positions.InsertQuery(Convert.ToString(Name.Text));
+                spisok.ItemsSource = Positions.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при добавлении должности: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            object ID_Positions = (spisok.SelectedItem as DataRowView).Row[0];
-            Positions.DeleteQuery(Convert.ToInt32(ID_Positions));
-            spisok.ItemsSource = Positions.GetData();
+            if (spisok.SelectedItem == null)
+            {
+                MessageBox.Show("Пожалуйста, выберите должность для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+            try
+            {
+                object ID_Positions = (spisok.SelectedItem as DataRowView).Row[0];
+                Positions.DeleteQuery(Convert.ToInt32(ID_Positions));
+                spisok.ItemsSource = Positions.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при удалении должности: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
         private void Edit_Click(object sender, RoutedEventArgs e)
         {
-            object ID_Positions = (spisok.SelectedItem as DataRowView).Row[0];
-            Positions.UpdateQuery(Convert.ToString(Name.Text), Convert.ToInt32(ID_Positions));
-            spisok.ItemsSource = Positions.GetData();
+            if (spisok.SelectedItem == null || string.IsNullOrWhiteSpace(Name.Text))
+            {
+                MessageBox.Show("Пожалуйста, выберите должность и введите новое название.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+                return; 
+            }
+
+            try
+            {
+                object ID_Positions = (spisok.SelectedItem as DataRowView).Row[0];
+                Positions.UpdateQuery(Convert.ToString(Name.Text), Convert.ToInt32(ID_Positions));
+                spisok.ItemsSource = Positions.GetData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Произошла ошибка при изменении должности: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
     }
 }
